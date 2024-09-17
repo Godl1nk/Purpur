@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Godl1nk <chuanzhefong@gmail.com>
+Date: Tue, 17 Sep 2024 18:50:12 +0800
+Subject: [PATCH] use fast util here
+
+
+diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
+index 26fbc981ec9acafc7ba1753759375c142261b6ab..b15ad70f5140a57eefc66d8df2708fac61d0859c 100644
+--- a/src/main/java/net/minecraft/world/level/Level.java
++++ b/src/main/java/net/minecraft/world/level/Level.java
+@@ -10,6 +10,7 @@ import java.util.function.Consumer;
+ import java.util.function.Predicate;
+ import java.util.function.Supplier;
+ import javax.annotation.Nullable;
++import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+ import net.minecraft.CrashReport;
+ import net.minecraft.CrashReportCategory;
+ import net.minecraft.ReportedException;
+@@ -116,9 +117,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+     public static final int TICKS_PER_DAY = 24000;
+     public static final int MAX_ENTITY_SPAWN_Y = 20000000;
+     public static final int MIN_ENTITY_SPAWN_Y = -20000000;
+-    public final List<TickingBlockEntity> blockEntityTickers = Lists.newArrayList(); // Paper - public
++    public final List<TickingBlockEntity> blockEntityTickers = new ObjectArrayList<>(); // Godl1nk - Fast Util
+     protected final NeighborUpdater neighborUpdater;
+-    private final List<TickingBlockEntity> pendingBlockEntityTickers = Lists.newArrayList();
++    private final List<TickingBlockEntity> pendingBlockEntityTickers = new ObjectArrayList<>(); // Godl1nk - Fast Util
+     private boolean tickingBlockEntities;
+     public final Thread thread;
+     private final boolean isDebug;
